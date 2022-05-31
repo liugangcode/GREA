@@ -5,7 +5,7 @@ This is the source code for the paper:
 
 Graph Rationalization with Environment-based Augmentations
 
-by Anonymous Author(s)
+by Gang Liu, Tong Zhao, Jiaxin Xu, Tengfei Luo, Meng Jiang
 
 ## Requirements
 
@@ -26,6 +26,6 @@ python main_pyg.py --dataset ogbg-molhiv
 python main_pyg.py --dataset plym-o2_prop
 ```
 
-#### Implementation on other datasets
+#### Datasets
 
 TODO
