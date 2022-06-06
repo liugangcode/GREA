@@ -5,7 +5,7 @@ This is the source code for the paper:
 
 Graph Rationalization with Environment-based Augmentations
 
-by Gang Liu, Tong Zhao, Jiaxin Xu, Tengfei Luo, Meng Jiang
+by [Gang Liu](https://liugangcode.github.io/) ([gliu7@nd.edu](gliu7@nd.edu)), [Tong Zhao](https://tzhao.io/), Jiaxin Xu, [Tengfei Luo](https://monsterlab.nd.edu/), [Meng Jiang](http://www.meng-jiang.com/)
 
 ## Requirements
 
@@ -16,16 +16,18 @@ pip install -r requirements.txt
 
 ## Usage
 
-Following are the commands to reproduce the experiment results on HIV and oxygen permeability.
+Following are the commands to run experiments on polymer or molecule datasets using default settings.
 
 ```
-# HIV
-python main_pyg.py --dataset ogbg-molhiv
+# OGBG-HIV for example
+python main_pyg.py --dataset ogbg-molhiv --by_default
 
-# oxygen permeability
-python main_pyg.py --dataset plym-o2_prop
+# Polymer Oxygen Permeability
+python main_pyg.py --dataset plym-o2_prop --by_default
 ```
 
 #### Datasets
 
-TODO
+We provide four datasets (.csv) for tasks of polymer graph regression. They can be found in the ``` data/'name'/raw ``` folder. 
+
+Binary classification tasks for the OGBG dataset (i.e., HIV, ToxCast, Tox21, BBBP, BACE, ClinTox and SIDER) can be directedly implemented using commands such as ``` --dataset ogbg-molhiv ``` following the [instructions](https://github.com/snap-stanford/ogb/tree/master/examples/graphproppred/mol) of the official OGBG dataset implementations.
