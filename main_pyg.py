@@ -172,13 +172,10 @@ def config_and_run(args):
                 args.use_clip_norm = True
                 args.path_list=[2, 4]
         if args.dataset == 'ogbg-molbace':
-            args.filename = args.dataset
-            args.plym_prop = 'none'
             if args.gnn == 'gin-virtual' or args.gnn == 'gin':
                 args.gnn = 'gin'
                 args.l2reg = 7e-4
                 args.gamma = 0.55
-
                 args.num_layer = 4  
                 args.batch_size = 64
                 args.emb_dim = 64
@@ -194,8 +191,6 @@ def config_and_run(args):
                 args.emb_dim = 64
                 args.batch_size = 128
         if args.dataset == 'ogbg-molbbbp':
-            args.filename = args.dataset
-            args.plym_prop = 'none'
             args.l2reg = 5e-6
             args.initw_name = 'orthogonal'
             args.num_layer = 2
@@ -215,7 +210,7 @@ def config_and_run(args):
                 args.gnn = 'gcn'
             args.l2reg = 1e-4
             args.patience = 100
-            args.gamma = 0.65 #6
+            args.gamma = 0.65
             args.num_layer =  5
             args.epochs = 400
         if args.dataset == 'ogbg-molclintox':
@@ -223,7 +218,6 @@ def config_and_run(args):
                 args.gnn = 'gin'
             if args.gnn == 'gcn-virtual' or args.gnn == 'gcn':
                 args.gnn = 'gcn'
-            args.filename = args.dataset
             args.use_linear_predictor = True
             args.use_clip_norm = True
             args.gamma = 0.2
@@ -235,7 +229,6 @@ def config_and_run(args):
             args.epochs = 400
             args.drop_ratio=0.5
         if args.dataset == 'ogbg-moltox21':
-            args.filename = args.dataset
             args.gamma = 0.8 
         if args.dataset == 'ogbg-moltoxcast':
             if args.gnn == 'gin-virtual' or args.gnn == 'gin':
