@@ -16,6 +16,7 @@ from ogb.graphproppred import PygGraphPropPredDataset, Evaluator
 from model import GraphEnvAug
 from utils import init_weights, get_args, train, eval
 
+
 def main(args):
     print(args)
     device = torch.device("cuda:" + str(args.device)) if torch.cuda.is_available() else torch.device("cpu")
@@ -30,7 +31,6 @@ def main(args):
 
     elif args.dataset.startswith('plym'):
         dataset = PolymerRegDataset(name = args.dataset.split('-')[1], root='data') # PolymerRegDataset
-
         full_idx = list(range(len(dataset)))
         train_ratio = 0.6
         valid_ratio = 0.1
@@ -46,7 +46,6 @@ def main(args):
         valid_loader = DataLoader(dataset[val_index], batch_size=args.batch_size, shuffle=False, num_workers = 0)
         test_loader = DataLoader(dataset[test_index], batch_size=args.batch_size, shuffle=False, num_workers = 0)
         evaluator = Evaluator('ogbg-molesol') # RMSE metric
-        print(dataset[0])
     n_train_data, n_val_data, n_test_data = len(train_loader.dataset), len(valid_loader.dataset), float(len(test_loader.dataset))
     print(f"# Train: {n_train_data}  #Test: {n_test_data} #Val: {n_val_data}")
 
@@ -109,30 +108,148 @@ def main(args):
         return [best_valid_perf, test_rmse, test_r2]
 
 def config_and_run(args):
-    if args.dataset == 'plym-o2_prop':
-        args.plym_prop = 'o2' 
-        args.gamma = 0.2
-        args.epochs = 400
-        args.num_layer = 3
-        args.drop_ratio = 0.1
-        args.batch_size = 32
-        args.l2reg = 1e-4
-        args.lr = 1e-2
-        if args.gnn == 'gcn-virtual':
-            args.lr = 1e-3
-            args.l2reg = 1e-5
-            args.patience = 100
-    if args.dataset == 'ogbg-molhiv':
-        args.plym_prop = 'none'
-        args.gamma = 0.4
-        args.initw_name = 'orthogonal'
-        if args.gnn == 'gcn-virtual':
-            args.lr = 1e-3
-            args.l2reg = 1e-5
-            args.epochs = 100
+    
+    if args.by_default:
+        if args.dataset == 'plym-o2_prop':
+            # oxygen permeability
+            args.gamma = 0.2
+            args.epochs = 400
             args.num_layer = 3
+            args.drop_ratio = 0.1
+            args.batch_size = 32
+            args.l2reg = 1e-4
+            args.lr = 1e-2
+            if args.gnn == 'gcn-virtual':
+                args.lr = 1e-3
+                args.l2reg = 1e-5
+                args.patience = 100
+        if args.dataset == 'plym-mt_prop':
+            # melting temperature
+            args.epochs = 400
+            args.l2reg = 1e-5
+            args.gamma = 0.05
+            args.num_layer = 3
+            args.drop_ratio = 0.1
+            args.batch_size = 32
+            args.lr = 1e-2
+            if args.gnn == 'gcn-virtual':
+                args.lr = 1e-3
+            args.patience = 50
+        if args.dataset == 'plym-tg_prop':
+            # glass temperature
+            args.epochs = 400
+            args.l2reg = 1e-5 
+            args.gamma = 0.05
+            args.num_layer = 3
+            args.drop_ratio = 0.1
+            args.initw_name = 'orthogonal'
+            args.batch_size = 256
+            args.lr = 1e-2
+            args.patience = 50
+        if args.dataset == 'plym-density_prop':
+            # polymer density
+            args.epochs = 400
+            args.l2reg = 1e-5
+            args.gamma = 0.3
+            args.num_layer = 3
+            args.drop_ratio = 0.5
+            if args.gnn == 'gcn-virtual':
+                args.l2reg = 1e-4
+            args.batch_size = 32
+            args.lr = 1e-3
+            args.patience = 50
             args.use_clip_norm = True
-            args.path_list=[2, 4]
+        
+        if args.dataset == 'ogbg-molhiv':
+            args.gamma = 0.1
+            args.batch_size = 512
+            args.initw_name = 'orthogonal'
+            if args.gnn == 'gcn-virtual':
+                args.lr = 1e-3
+                args.l2reg = 1e-5
+                args.epochs = 100
+                args.num_layer = 3
+                args.use_clip_norm = True
+                args.path_list=[2, 4]
+        if args.dataset == 'ogbg-molbace':
+            args.filename = args.dataset
+            args.plym_prop = 'none'
+            if args.gnn == 'gin-virtual' or args.gnn == 'gin':
+                args.gnn = 'gin'
+                args.l2reg = 7e-4
+                args.gamma = 0.55
+
+                args.num_layer = 4  
+                args.batch_size = 64
+                args.emb_dim = 64
+                args.use_lr_scheduler = True
+                args.patience = 100
+                args.drop_ratio = 0.3
+                args.initw_name = 'orthogonal' 
+            if args.gnn == 'gcn-virtual' or args.gnn == 'gcn':
+                args.gnn = 'gcn'
+                args.patience = 100
+                args.initw_name = 'orthogonal' 
+                args.num_layer = 2
+                args.emb_dim = 64
+                args.batch_size = 128
+        if args.dataset == 'ogbg-molbbbp':
+            args.filename = args.dataset
+            args.plym_prop = 'none'
+            args.l2reg = 5e-6
+            args.initw_name = 'orthogonal'
+            args.num_layer = 2
+            args.emb_dim = 64
+            args.batch_size = 256 
+            args.use_lr_scheduler = True 
+            args.gamma = 0.2
+            if args.gnn == 'gcn-virtual' or args.gnn == 'gcn':
+                args.gnn = 'gcn-virtual'
+                args.gamma = 0.4
+                args.emb_dim = 128
+                args.use_lr_scheduler = False 
+        if args.dataset == 'ogbg-molsider':
+            if args.gnn == 'gin-virtual' or args.gnn == 'gin':
+                args.gnn = 'gin'
+            if args.gnn == 'gcn-virtual' or args.gnn == 'gcn':
+                args.gnn = 'gcn'
+            args.l2reg = 1e-4
+            args.patience = 100
+            args.gamma = 0.65 #6
+            args.num_layer =  5
+            args.epochs = 400
+        if args.dataset == 'ogbg-molclintox':
+            if args.gnn == 'gin-virtual' or args.gnn == 'gin':
+                args.gnn = 'gin'
+            if args.gnn == 'gcn-virtual' or args.gnn == 'gcn':
+                args.gnn = 'gcn'
+            args.filename = args.dataset
+            args.use_linear_predictor = True
+            args.use_clip_norm = True
+            args.gamma = 0.2
+            args.patience = 100
+            args.batch_size = 64 
+            args.num_layer = 5
+            args.emb_dim = 300
+            args.l2reg = 1e-4
+            args.epochs = 400
+            args.drop_ratio=0.5
+        if args.dataset == 'ogbg-moltox21':
+            args.filename = args.dataset
+            args.gamma = 0.8 
+        if args.dataset == 'ogbg-moltoxcast':
+            if args.gnn == 'gin-virtual' or args.gnn == 'gin':
+                args.gnn = 'gin'
+            if args.gnn == 'gcn-virtual' or args.gnn == 'gcn':
+                args.gnn = 'gcn'
+            args.patience = 50
+            args.epochs = 150
+            args.l2reg = 1e-5
+            args.gamma = 0.7
+            args.num_layer = 2
+
+
+    args.plym_prop = 'none' if args.dataset.startswith('ogbg') else args.dataset.split('-')[1].split('_')[0]
     if args.dataset.startswith('ogbg'):
         results = {'valid_auc': [], 'test_auc': []}
     else:
