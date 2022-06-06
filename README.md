@@ -31,3 +31,18 @@ python main_pyg.py --dataset plym-o2_prop --by_default
 We provide four datasets (.csv) for the tasks of polymer graph regression. They can be found in the ``` data/'name'/raw ``` folder. 
 
 Binary classification tasks for the OGBG dataset (i.e., HIV, ToxCast, Tox21, BBBP, BACE, ClinTox and SIDER) can be directedly implemented using commands such as ``` --dataset ogbg-molhiv ``` following the [instructions](https://github.com/snap-stanford/ogb/tree/master/examples/graphproppred/mol) of the official OGBG dataset implementations.
+
+## Reference
+
+If you find this repository useful in your research, please cite our paper:
+
+```
+@inproceedings{liu2022graph,
+  title={Graph Rationalization with Environment-based Augmentations},
+  author={Liu, Gang and Zhao, Tong and Xu, Jiaxin and Luo, Tengfei and Jiang, Meng},
+  booktitle={Proceedings of the 28th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining},
+  pages={},
+  year={2022}
+}
+
+```
