@@ -1,9 +1,9 @@
 Graph Rationalization with Environment-based Augmentations
 ====
 
-This is the source code for the paper:
+This is the source code for the KDD'22 paper:
 
-Graph Rationalization with Environment-based Augmentations
+[Graph Rationalization with Environment-based Augmentations](https://arxiv.org/pdf/2206.02886.pdf)
 
 by [Gang Liu](https://liugangcode.github.io/) ([gliu7@nd.edu](mailto:gliu7@nd.edu)), [Tong Zhao](https://tzhao.io/), Jiaxin Xu, [Tengfei Luo](https://monsterlab.nd.edu/), [Meng Jiang](http://www.meng-jiang.com/)
 
@@ -36,7 +36,7 @@ Binary classification tasks for the OGBG dataset (i.e., HIV, ToxCast, Tox21, BBB
 
 If you find this repository useful in your research, please cite our paper:
 
-```
+```bibtex
 @inproceedings{liu2022graph,
   title={Graph Rationalization with Environment-based Augmentations},
   author={Liu, Gang and Zhao, Tong and Xu, Jiaxin and Luo, Tengfei and Jiang, Meng},
