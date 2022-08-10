@@ -26,7 +26,7 @@ python main_pyg.py --dataset ogbg-molhiv --by_default
 python main_pyg.py --dataset plym-o2_prop --by_default
 ```
 
-#### Datasets
+## Datasets
 
 We provide four datasets (.csv) for the tasks of polymer graph regression. They can be found in the ``` data/'name'/raw ``` folder. 
 
