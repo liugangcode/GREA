@@ -40,9 +40,10 @@ If you find this repository useful in your research, please cite our paper:
 @inproceedings{liu2022graph,
   title={Graph Rationalization with Environment-based Augmentations},
   author={Liu, Gang and Zhao, Tong and Xu, Jiaxin and Luo, Tengfei and Jiang, Meng},
-  booktitle={Proceedings of the 28th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining},
-  pages={},
+  booktitle = {Proceedings of the 28th ACM SIGKDD Conference on Knowledge Discovery and Data Mining},
+  publisher = {Association for Computing Machinery},
+  pages = {1069–1078},
+  numpages = {10},
   year={2022}
 }
-
 ```
