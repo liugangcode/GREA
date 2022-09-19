@@ -39,7 +39,6 @@ class GraphEnvAug(torch.nn.Module):
             gate_nn = torch.nn.Sequential(torch.nn.Linear(emb_dim_rat, 2*emb_dim_rat), torch.nn.BatchNorm1d(2*emb_dim_rat), nn_act, torch.nn.Dropout(), torch.nn.Linear(2*emb_dim_rat, 1)),
             nn=None
             )
-        
         rep_dim = emb_dim
         if use_linear_predictor:
             self.predictor = torch.nn.Linear(rep_dim, self.num_tasks)
@@ -51,13 +50,9 @@ class GraphEnvAug(torch.nn.Module):
         h_node = self.graph_encoder(batched_data)
         h_r, h_env, r_node_num, env_node_num = self.separator(batched_data, h_node)
         h_rep = (h_r.unsqueeze(1) + h_env.unsqueeze(0)).view(-1, self.emb_dim)
-        
         pred_rem = self.predictor(h_r)
         pred_rep = self.predictor(h_rep)
-
         loss_reg =  torch.abs(r_node_num / (r_node_num + env_node_num) - self.gamma  * torch.ones_like(r_node_num)).mean()
-        loss_reg += (self.separator.non_zero_node_ratio - self.gamma  * torch.ones_like(r_node_num)).mean()
-
         output = {'pred_rep': pred_rep, 'pred_rem': pred_rem, 'loss_reg':loss_reg}
         return output
     
@@ -99,9 +94,5 @@ class separator(torch.nn.Module):
 
         r_node_num = scatter_add(gate, batch, dim=0, dim_size=size)
         env_node_num = scatter_add((1 - gate), batch, dim=0, dim_size=size)
-
-        non_zero_nodes = scatter_add((gate > 0).to(torch.float32), batch, dim=0, dim_size=size) 
-        all_nodes = scatter_add(torch.ones_like(gate).to(torch.float32), batch, dim=0, dim_size=size)
-        self.non_zero_node_ratio = non_zero_nodes / all_nodes
 
         return h_out, c_out, r_node_num + 1e-8 , env_node_num + 1e-8 

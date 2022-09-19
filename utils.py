@@ -45,6 +45,8 @@ def get_args():
                         help='dataset name (default: ogbg-molhiv)')
     parser.add_argument('--trails', type=int, default=5,
                         help='numer of experiments (default: 5)')
+    parser.add_argument('--by_default', default=False, action='store_true',
+                        help='use default configuration for hyperparameters')
     args = parser.parse_args()
     
     return args
