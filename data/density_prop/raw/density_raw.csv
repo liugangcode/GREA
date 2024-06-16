@@ -920,7 +920,6 @@ SMILES,density
 *CCCCCCS(*)(=O)=O,1.29
 *c1ccc(*)cc1,1.33
 *c1ccc(C(*)C)cc1,1.155
-*Cc1cc(C)c(*)cc1C,268
 *CCc1ccc(*)cc1,1.14
 *=C=C=C(Cn1c2ccccc2c2ccccc21)C(=*)Cn1c2ccccc2c2ccccc21,1.31
 *=C=C=C(CO)C(=*)CO,1.23075
