@@ -28,7 +28,9 @@ python main_pyg.py --dataset plym-o2_prop --by_default
 
 ## Datasets
 
-We provide four datasets (.csv) for the tasks of polymer graph regression. They can be found in the ``` data/'name'/raw ``` folder. 
+We provide the oxygen permeability dataset (.csv) for polymer graph regression. It can be found in the ``` data/'name'/raw ``` folder. 
+
+> Update March 26, 2025: We delegated the polymer datasets for GlassTemp, MeltingTemp, and PolyDensit as requested by the NIMS Materials Database, MatNavi.
 
 Binary classification tasks for the OGBG dataset (i.e., HIV, ToxCast, Tox21, BBBP, BACE, ClinTox and SIDER) can be directedly implemented using commands such as ``` --dataset ogbg-molhiv ``` following the [instructions](https://github.com/snap-stanford/ogb/tree/master/examples/graphproppred/mol) of the official OGBG dataset implementations.
 
